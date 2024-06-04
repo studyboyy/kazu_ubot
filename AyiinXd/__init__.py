@@ -581,13 +581,13 @@ with bot:
                     )
                     try:
                         # Periksa apakah event memiliki atribut yang diperlukan
-                        if event.message and event.chat_id:
-                            await event.edit(
-                                text,
-                                file=logoyins,
-                                buttons=buttons,
-                                link_preview=False,
-                            )
+                        if event.original_update and event.original_update.message:
+                                await event.edit(
+                                    text,
+                                    file=logoyins,
+                                    buttons=buttons,
+                                    link_preview=False,
+                                )
                         else:
                             print("Data event tidak valid: pesan atau chat_id hilang")
                     except Exception as e:
