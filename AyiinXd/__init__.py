@@ -567,6 +567,7 @@ with bot:
             )
         )
         async def on_plug_in_callback_query_handler(event):
+            
             if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
                 buttons = paginate_help(0, dugmeler, "helpme")
                 
@@ -580,8 +581,10 @@ with bot:
                         f"⍟ **ᴊᴜᴍʟᴀʜ :** {len(dugmeler)} **Modules**"
                     )
                     try:
+                        
                         # Periksa apakah event memiliki atribut yang diperlukan
-                        if event.original_update and event.original_update.message:
+                        if event.original_update :
+                            
                                 await event.edit(
                                     text,
                                     file=logoyins,
