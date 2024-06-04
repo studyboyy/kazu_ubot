@@ -581,18 +581,13 @@ with bot:
                         f"⍟ **ᴊᴜᴍʟᴀʜ :** {len(dugmeler)} **Modules**"
                     )
                     try:
-                        
-                        # Periksa apakah event memiliki atribut yang diperlukan
-                        if event.reply_to_msg_id:
-                            
                                 await event.edit(
                                     text,
                                     file=logoyins,
                                     buttons=buttons,
                                     link_preview=True,
                                 )
-                        else:
-                            print("Data event tidak valid: pesan atau chat_id hilang")
+                        
                     except Exception as e:
                         print(f"Terjadi kesalahan saat mengedit pesan: {e}")
             else:
