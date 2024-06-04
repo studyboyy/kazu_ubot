@@ -568,33 +568,50 @@ with bot:
         )
         async def on_plug_in_callback_query_handler(event):
             
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
-                buttons = paginate_help(0, dugmeler, "helpme")
+            try:
+        # Pastikan event tidak None dan memiliki properti query
+                if not event or not hasattr(event, 'query'):
+                    print("Event atau query dalam event tidak valid")
+                    return
                 
-                # Periksa apakah variabel yang diperlukan ada
-                if logoyins and dugmeler and adB and HOSTED_ON and user:
-                    text = (
-                        f"**✨ 𝙺𝙰𝚉𝚄 𝚄𝚂𝙴𝚁𝙱𝙾𝚃 𝙸𝙽𝙻𝙸𝙽𝙴 𝙼𝙴𝙽𝚄 ✨**\n\n"
-                        f"⍟ **ʙᴀsᴇ ᴏɴ :** {adB.name}\n"
-                        f"⍟ **ᴅᴇᴘʟᴏʏ :** •[{HOSTED_ON}]•\n"
-                        f"⍟ **ᴏᴡɴᴇʀ** {user.first_name}\n"
-                        f"⍟ **ᴊᴜᴍʟᴀʜ :** {len(dugmeler)} **Modules**"
-                    )
-                    try:
-                                await event.edit(
-                                    text,
-                                    file=logoyins,
-                                    buttons=[
-                                        [custom.Button.inline("ᴍᴀɪɴ ᴍᴇɴᴜ", data="close"),]
-                                        ],
-                                    link_preview=True,
-                                )
+                # Pastikan user_id ada dalam event.query
+                if not hasattr(event.query, 'user_id'):
+                    print("user_id tidak ditemukan dalam event.query")
+                    return
+                
+                if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+                    buttons = paginate_help(0, dugmeler, "helpme")
+                    
+                    # Periksa apakah variabel yang diperlukan ada
+                    if logoyins and dugmeler and adB and HOSTED_ON and user:
+                        text = (
+                            f"**✨ 𝙺𝙰𝚉𝚄 𝚄𝚂𝙴𝚁𝙱𝙾𝚃 𝙸𝙽𝙻𝙸𝙽𝙴 𝙼𝙴𝙽𝚄 ✨**\n\n"
+                            f"⍟ **ʙᴀsᴇ ᴏɴ :** {adB.name}\n"
+                            f"⍟ **ᴅᴇᴘʟᴏʏ :** •[{HOSTED_ON}]•\n"
+                            f"⍟ **ᴏᴡɴᴇʀ** {user.first_name}\n"
+                            f"⍟ **ᴊᴜᴍʟᴀʜ :** {len(dugmeler)} **Modules**"
+                        )
                         
-                    except Exception as e:
-                        print(f"Terjadi kesalahan saat mengedit pesan: {e}")
-            else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+                        # Logging untuk debug
+                        print(f"Text yang akan dikirim: {text}")
+                        print(f"File: {logoyins}")
+                        print(f"Buttons: {buttons}")
+
+                        try:
+                            await event.edit(
+                                text,
+                                file=logoyins,
+                                buttons=buttons,
+                                link_preview=True,
+                            )
+                        except Exception as e:
+                            print(f"Terjadi kesalahan saat mengedit pesan: {e}")
+                    else:
+                        reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
+                        await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+            except Exception as e:
+                print(f"Terjadi kesalahan umum: {e}")
+    
 
         @tgbot.on(events.InlineQuery)
         async def inline_handler(event):
