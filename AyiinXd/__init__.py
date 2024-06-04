@@ -584,7 +584,9 @@ with bot:
                                 await event.edit(
                                     text,
                                     file=logoyins,
-                                    buttons=buttons,
+                                    buttons=[
+                                        [custom.Button.inline("ᴍᴀɪɴ ᴍᴇɴᴜ", data="close"),]
+                                        ],
                                     link_preview=True,
                                 )
                         
