@@ -910,7 +910,7 @@ with bot:
         @tgbot.on(events.CallbackQuery(data=b"konten_yins"))
         async def about(event):
             if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
-                await event.edit(f"""
+                await event.edit("""
 •Menu• - Konten Channel untuk [{user.first_name}](tg://user?id={user.id})
 """,
                                 buttons=[
