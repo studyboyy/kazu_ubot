@@ -569,13 +569,29 @@ with bot:
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
                 buttons = paginate_help(0, dugmeler, "helpme")
-                text = f"**✨ 𝙺𝙰𝚉𝚄 𝚄𝚂𝙴𝚁𝙱𝙾𝚃 𝙸𝙽𝙻𝙸𝙽𝙴 𝙼𝙴𝙽𝚄 ✨**\n\n⍟ **ʙᴀsᴇ ᴏɴ :** {adB.name}\n⍟ **ᴅᴇᴘʟᴏʏ :** •[{HOSTED_ON}]•\n⍟ **ᴏᴡɴᴇʀ** {user.first_name}\n⍟ **ᴊᴜᴍʟᴀʜ :** {len(dugmeler)} **Modules**"
-                await event.edit(
-                    text,
-                    file=logoyins,
-                    buttons=buttons,
-                    link_preview=False,
-                )
+                
+                # Periksa apakah variabel yang diperlukan ada
+                if logoyins and dugmeler and adB and HOSTED_ON and user:
+                    text = (
+                        f"**✨ 𝙺𝙰𝚉𝚄 𝚄𝚂𝙴𝚁𝙱𝙾𝚃 𝙸𝙽𝙻𝙸𝙽𝙴 𝙼𝙴𝙽𝚄 ✨**\n\n"
+                        f"⍟ **ʙᴀsᴇ ᴏɴ :** {adB.name}\n"
+                        f"⍟ **ᴅᴇᴘʟᴏʏ :** •[{HOSTED_ON}]•\n"
+                        f"⍟ **ᴏᴡɴᴇʀ** {user.first_name}\n"
+                        f"⍟ **ᴊᴜᴍʟᴀʜ :** {len(dugmeler)} **Modules**"
+                    )
+                    try:
+                        # Periksa apakah event memiliki atribut yang diperlukan
+                        if event.message and event.chat_id:
+                            await event.edit(
+                                text,
+                                file=logoyins,
+                                buttons=buttons,
+                                link_preview=False,
+                            )
+                        else:
+                            print("Data event tidak valid: pesan atau chat_id hilang")
+                    except Exception as e:
+                        print(f"Terjadi kesalahan saat mengedit pesan: {e}")
             else:
                 reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
@@ -910,7 +926,7 @@ with bot:
         @tgbot.on(events.CallbackQuery(data=b"konten_yins"))
         async def about(event):
             if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
-                await event.edit("""
+                await event.edit(f"""
 •Menu• - Konten Channel untuk [{user.first_name}](tg://user?id={user.id})
 """,
                                 buttons=[
