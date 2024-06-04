@@ -913,10 +913,10 @@ with bot:
                 await event.edit(f"""
 •Menu• - Konten Channel untuk [{user.first_name}](tg://user?id={user.id})
 """,
-                                 buttons=[
-                                     [
-                                         Button.inline("⍟ ʙᴛᴘᴍ ⍟",
-                                                       data="btpmayiin"),
+                                buttons=[
+                                    [
+                                        Button.inline("⍟ ʙᴛᴘᴍ ⍟",
+                                                      data="btpmayiin"),
                                          Button.inline("⍟ ʏɪɴs ʙᴏᴋᴇᴘ ⍟",
                                                        data="yinsbokep")],
                                      [custom.Button.inline(
